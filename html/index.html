@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Amore e Sapore · Pizzería Cafetería Italiana en Bergondo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --az: #1a4fa0;
+            --azl: #e8eef8;
+            --azm: #3a6bc4;
+            --t: var(--color-text-primary);
+            --tm: var(--color-text-secondary);
+            --b: var(--color-border-tertiary);
+            --card: var(--color-background-primary);
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            transition: opacity 0.5s;
+        }
+
+        #loader.out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .pizza-loader {
+            width: 150px;
+            height: 150px;
+        }
+
+        .pizza-loader svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loader-txt {
+            font-size: 20px;
+            color: #1a4fa0;
+            letter-spacing: 0.5px;
+        }
+
+        nav {
+            background: var(--az);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2.5rem;
+            height: 76px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-nav {
+            font-size: 30px;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+        }
+
+        .lang-select {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 7px 32px 7px 12px;
+            font-size: 17px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.7)'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 9px center;
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .lang-select option {
+            background: #1a4fa0;
+            color: #fff;
+        }
+
+        .nav-pill {
+            background: #fff;
+            color: var(--az);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 28px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            white-space: nowrap;
+        }
+
+        .hero {
+            background: var(--azl);
+            padding: 5rem 2.5rem 4.5rem;
+            text-align: center;
+            border-bottom: 3px dashed #c0cfe8;
+        }
+
+        .hero-sticker {
+            display: inline-block;
+            background: var(--az);
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 7px 20px;
+            border-radius: 28px;
+            margin-bottom: 1.5rem;
+            transform: rotate(-1deg);
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            color: var(--az);
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: 400;
+            line-height: 1.05;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-slogan {
+            font-size: 22px;
+            color: var(--tm);
+            max-width: 700px;
+            margin: 1rem auto 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-az {
+            background: var(--az);
+            color: #fff;
+            border: none;
+            padding: 15px 34px;
+            border-radius: 10px;
+            font-size: 19px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+
+        .btn-az:hover {
+            opacity: 0.88;
+        }
+
+        .btn-out {
+            background: transparent;
+            color: var(--az);
+            border: 2px solid var(--az);
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-size: 19px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+
+        .btn-out:hover {
+            background: var(--azl);
+        }
+
+        .vibes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 2.2rem;
+            flex-wrap: wrap;
+        }
+
+        .vibe {
+            background: #fff;
+            border: 2px solid #c0cfe8;
+            border-radius: 28px;
+            padding: 7px 20px;
+            font-size: 17px;
+            color: var(--az);
+        }
+
+        .strip {
+            background: var(--az);
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .strip-inner {
+            display: inline-block;
+            animation: ticker 22s linear infinite;
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes ticker {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        hr.dash {
+            border: none;
+            border-top: 3px dashed #c0cfe8;
+            margin: 0;
+        }
+
+        .wrap {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 4.5rem 3.5rem;
+        }
+
+        .sec-kicker {
+            font-size: 15px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--az);
+            margin-bottom: 8px;
+        }
+
+        .sec-h {
+            font-size: 40px;
+            font-weight: 500;
+            color: var(--az);
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        .sec-p {
+            font-size: 20px;
+            color: var(--tm);
+            margin-bottom: 2.5rem;
+            line-height: 1.65;
+        }
+
+        .nos-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nos-quote {
+            background: var(--az);
+            color: #fff;
+            padding: 2.5rem;
+            border-radius: 16px;
+            font-size: 22px;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .nos-quote::after {
+            content: '❝';
+            position: absolute;
+            top: -18px;
+            left: 20px;
+            font-size: 56px;
+            color: rgba(255, 255, 255, 0.25);
+            line-height: 1;
+        }
+
+        .nos-cite {
+            font-size: 16px;
+            margin-top: 14px;
+            opacity: 0.7;
+            font-style: normal;
+            font-family: var(--font-sans);
+        }
+
+        .nos-pills {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .nos-pill {
+            background: var(--card);
+            border: 2px solid #c0cfe8;
+            border-radius: 12px;
+            padding: 18px 20px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .nos-icon {
+            font-size: 26px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .nos-pill-t {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--az);
+            margin-bottom: 4px;
+        }
+
+        .nos-pill-s {
+            font-size: 16px;
+            color: var(--tm);
+            line-height: 1.5;
+        }
+
+        .carta-wrap {
+            background: var(--azl);
+        }
+
+        .carta-inner {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 4.5rem 3.5rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+
+        .tab {
+            padding: 10px 24px;
+            border-radius: 28px;
+            border: 2px solid #c0cfe8;
+            background: #fff;
+            color: var(--tm);
+            font-size: 18px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            transition: all 0.15s;
+        }
+
+        .tab.on {
+            background: var(--az);
+            color: #fff;
+            border-color: var(--az);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .mcard {
+            background: #fff;
+            border: 2px solid #c0cfe8;
+            border-radius: 12px;
+            padding: 1.4rem;
+        }
+
+        .mcard:hover {
+            border-color: var(--azm);
+        }
+
+        .mcard-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 7px;
+        }
+
+        .mcard-name {
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--t);
+        }
+
+        .mcard-price {
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--az);
+            white-space: nowrap;
+        }
+
+        .mcard-desc {
+            font-size: 16px;
+            color: var(--tm);
+            line-height: 1.5;
+        }
+
+        .badges {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .badge {
+            font-size: 13px;
+            padding: 3px 12px;
+            border-radius: 28px;
+        }
+
+        .bv {
+            background: #e0f0ff;
+            color: #0d3d8a;
+        }
+
+        .bd {
+            background: #dce8fa;
+            color: #1a4fa0;
+        }
+
+        .bs {
+            background: #f0e8d0;
+            color: #7a5010;
+        }
+
+        .bar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 16px;
+        }
+
+        .bar-card {
+            background: var(--card);
+            border: 2px solid #c0cfe8;
+            border-radius: 12px;
+            padding: 1.4rem;
+            text-align: center;
+        }
+
+        .bar-ico {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .bar-n {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--az);
+        }
+
+        .bar-s {
+            font-size: 15px;
+            color: var(--tm);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        .del-band {
+            background: var(--az);
+            padding: 4rem 2.5rem;
+            text-align: center;
+        }
+
+        .del-band h2 {
+            font-size: 38px;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .del-band p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            max-width: 580px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .del-chips {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .del-chip {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 28px;
+            padding: 7px 20px;
+            font-size: 16px;
+            color: #d0e4ff;
+        }
+
+        .btn-white {
+            background: #fff;
+            color: var(--az);
+            border: none;
+            padding: 15px 34px;
+            border-radius: 10px;
+            font-size: 19px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: var(--font-sans);
+        }
+
+        .btn-white:hover {
+            opacity: 0.9;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .cinfo {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .crow {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: var(--card);
+            border: 2px solid #c0cfe8;
+            border-radius: 12px;
+            padding: 16px 18px;
+        }
+
+        .cico {
+            font-size: 24px;
+            line-height: 1;
+            margin-top: 2px;
+        }
+
+        .clbl {
+            font-size: 14px;
+            color: var(--tm);
+            margin-bottom: 3px;
+        }
+
+        .cval {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--t);
+        }
+
+        .cval a {
+            color: var(--az);
+            text-decoration: none;
+        }
+
+        .cval a:hover {
+            text-decoration: underline;
+        }
+
+        .hor-block {
+            background: var(--azl);
+            border: 2px dashed #c0cfe8;
+            border-radius: 12px;
+            padding: 18px 20px;
+        }
+
+        .hor-title {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--az);
+            margin-bottom: 12px;
+        }
+
+        .hor-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .hor-table tr {
+            border-bottom: 0.5px solid #d0dcf0;
+        }
+
+        .hor-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .hor-table td {
+            padding: 9px 4px;
+            font-size: 17px;
+        }
+
+        .hor-table td:first-child {
+            color: var(--tm);
+            width: 50%;
+        }
+
+        .hor-table td:last-child {
+            font-weight: 500;
+            color: var(--t);
+            text-align: right;
+        }
+
+        .hor-table tr.cerrado td:last-child {
+            color: #c0392b;
+        }
+
+        .hor-table tr.hoy td {
+            color: var(--az);
+            font-weight: 500;
+        }
+
+        .hor-table tr.hoy td:last-child {
+            color: var(--az);
+        }
+
+        .map-box {
+            border: 2px solid #c0cfe8;
+            border-radius: 16px;
+            height: 380px;
+            background: var(--azl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 16px;
+        }
+
+        .map-box svg {
+            opacity: 0.35;
+        }
+
+        .map-box p {
+            font-size: 18px;
+            color: var(--tm);
+            line-height: 1.6;
+        }
+
+        .map-box a {
+            font-size: 17px;
+            color: var(--az);
+            text-decoration: none;
+            border: 2px solid var(--az);
+            padding: 10px 24px;
+            border-radius: 10px;
+        }
+
+        .map-box a:hover {
+            background: var(--az);
+            color: #fff;
+        }
+
+        footer {
+            background: var(--az);
+            padding: 2.5rem;
+            text-align: center;
+        }
+
+        .ft-logo {
+            font-size: 30px;
+            color: #fff;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+
+        .ft-sub {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.65);
+            margin-bottom: 1.2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ft-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+
+        .ft-links a {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .ft-links a:hover {
+            color: #fff;
+        }
+
+        .ft-copy {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        @media (max-width: 900px) {
+            .wrap, .carta-inner { padding: 3rem 1.5rem; }
+            .nos-wrap, .contact-grid { grid-template-columns: 1fr; }
+            nav { padding: 0 1.2rem; }
+            .logo-nav { font-size: 22px; }
+            .nav-links { display: none; }
+        }
+
+        @media (max-width: 600px) {
+            /* Nav */
+            nav { height: 56px; padding: 0 1rem; }
+            .logo-nav { font-size: 18px; }
+            .nav-pill { font-size: 13px; padding: 7px 12px; }
+            .lang-select { font-size: 13px; padding: 5px 24px 5px 8px; }
+
+            /* Hero */
+            .hero { padding: 2.5rem 1rem 2rem; }
+            .hero-sticker { font-size: 11px; padding: 5px 14px; margin-bottom: 1rem; }
+            .hero h1 { font-size: 36px; }
+            .hero-slogan { font-size: 15px; margin: 0.6rem auto 1.5rem; }
+            .btn-az, .btn-out { font-size: 15px; padding: 11px 22px; }
+            .vibe { font-size: 13px; padding: 5px 12px; }
+
+            /* Strip */
+            .strip-inner { font-size: 13px; }
+
+            /* Secciones */
+            .wrap, .carta-inner { padding: 2rem 1rem; }
+            .sec-kicker { font-size: 11px; }
+            .sec-h { font-size: 26px; }
+            .sec-p { font-size: 15px; margin-bottom: 1.5rem; }
+
+            /* Nosotros */
+            .nos-quote { font-size: 16px; padding: 1.5rem; }
+            .nos-cite { font-size: 13px; }
+            .nos-pill { padding: 12px 14px; gap: 12px; }
+            .nos-icon { font-size: 20px; }
+            .nos-pill-t { font-size: 15px; }
+            .nos-pill-s { font-size: 13px; }
+
+            /* Carta */
+            .tabs { gap: 6px; margin-bottom: 1.5rem; }
+            .tab { font-size: 14px; padding: 8px 16px; }
+            .menu-grid { grid-template-columns: 1fr; gap: 12px; }
+            .mcard { padding: 1rem; }
+            .mcard-name { font-size: 15px; }
+            .mcard-price { font-size: 15px; }
+            .mcard-desc { font-size: 13px; }
+            .badge { font-size: 11px; }
+
+            /* Bar */
+            .bar-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .bar-card { padding: 1rem 0.8rem; }
+            .bar-ico { font-size: 26px; margin-bottom: 6px; }
+            .bar-n { font-size: 14px; }
+            .bar-s { font-size: 12px; }
+
+            /* Delivery */
+            .del-band { padding: 2.5rem 1rem; }
+            .del-band h2 { font-size: 26px; }
+            .del-band p { font-size: 15px; }
+            .del-chip { font-size: 12px; padding: 5px 12px; }
+            .btn-white { font-size: 15px; padding: 11px 22px; }
+
+            /* Contacto */
+            .crow { padding: 12px 14px; gap: 10px; }
+            .cico { font-size: 20px; }
+            .clbl { font-size: 12px; }
+            .cval { font-size: 15px; }
+            .hor-title { font-size: 14px; }
+            .hor-table td { font-size: 14px; padding: 7px 4px; }
+            .map-box { height: 220px; }
+            .map-box p { font-size: 14px; }
+            .map-box a { font-size: 13px; padding: 8px 18px; }
+
+            /* Footer */
+            footer { padding: 1.5rem 1rem; }
+            .ft-logo { font-size: 22px; }
+            .ft-sub { font-size: 13px; }
+            .ft-links a { font-size: 13px; }
+            .ft-copy { font-size: 11px; }
+
+            /* Loader */
+            .pizza-loader { width: 100px; height: 100px; }
+            .loader-txt { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="pizza-loader">
+            <svg viewBox="0 0 100 100" id="pizza-svg">
+                <circle cx="50" cy="50" r="44" fill="#f5e6c8" stroke="#c0a060" stroke-width="2" />
+                <g id="slices"></g>
+                <circle cx="50" cy="50" r="8" fill="#e8c87a" stroke="#c0a060" stroke-width="1.5" />
+            </svg>
+        </div>
+        <div class="loader-txt" id="loader-txt">Preparando los ingredientes...</div>
+    </div>
+
+    <nav>
+        <div class="logo-nav">Amore e Sapore</div>
+        <ul class="nav-links">
+            <li><a onclick="ir('nosotros')" data-i18n="nav_nos">Nosotros</a></li>
+            <li><a onclick="ir('carta')" data-i18n="nav_carta">Carta</a></li>
+            <li><a onclick="ir('bar')" data-i18n="nav_bar">Bar</a></li>
+            <li><a onclick="ir('contacto')" data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+        <div class="nav-right">
+            <select class="lang-select" id="langSel" onchange="setLang(this.value)">
+                <option value="es">🇪🇸 ES</option>
+                <option value="gl">🏴 GL</option>
+                <option value="it">🇮🇹 IT</option>
+                <option value="en">🇬🇧 EN</option>
+            </select>
+            <button class="nav-pill" onclick="ir('delivery')" data-i18n="nav_order">🍕 Pedir pizza</button>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-sticker" data-i18n="hero_loc">Bergondo, A Coruña</div>
+        <h1>Amore e Sapore</h1>
+        <p class="hero-slogan" data-i18n="hero_slogan">Pizzería cafetería donde disfrutar de pizzas, café y comida italiana en un ambiente acogedor y familiar.</p>
+        <div class="hero-btns">
+            <button class="btn-az" onclick="ir('carta')" data-i18n="hero_btn1">Ver la carta</button>
+            <button class="btn-out" onclick="ir('contacto')" data-i18n="hero_btn2">Cómo llegar</button>
+        </div>
+        <div class="vibes">
+            <span class="vibe" data-i18n="v1">🌿 Todo fresco</span>
+            <span class="vibe" data-i18n="v2">🍕 Delivery a domicilio</span>
+            <span class="vibe" data-i18n="v3">☕ Cafetería</span>
+            <span class="vibe" data-i18n="v4">🇮🇹 🤝 🇪🇸 Dos culturas</span>
+        </div>
+    </div>
+
+    <hr class="dash">
+
+    <div class="wrap" id="nosotros">
+        <div class="nos-wrap">
+            <div>
+                <p class="sec-kicker" data-i18n="nos_kicker">Nuestra historia</p>
+                <h2 class="sec-h" data-i18n="nos_h">Medio italiano, medio gallego, todo nuestro</h2>
+                <p class="sec-p" data-i18n="nos_p">Tu dosis diaria de amore y sapore. Ven con sueño… y despierta feliz. Ven con hambre… y repite.</p>
+                <div class="nos-pills">
+                    <div class="nos-pill">
+                        <div class="nos-icon">🔥</div>
+                        <div>
+                            <div class="nos-pill-t" data-i18n="p1t">Horno de piedra</div>
+                            <div class="nos-pill-s" data-i18n="p1s">La masa descansa 48 horas. La pizza se hace en 90 segundos. La espera merece la pena.</div>
+                        </div>
+                    </div>
+                    <div class="nos-pill">
+                        <div class="nos-icon">🧑‍🌾</div>
+                        <div>
+                            <div class="nos-pill-t" data-i18n="p2t">Del productor a la mesa</div>
+                            <div class="nos-pill-s" data-i18n="p2s">Verduras, quesos y carnes de Galicia. Lo que no se consigue aquí, viene directo de Italia.</div>
+                        </div>
+                    </div>
+                    <div class="nos-pill">
+                        <div class="nos-icon">☕</div>
+                        <div>
+                            <div class="nos-pill-t" data-i18n="p3t">Cafetería con alma</div>
+                            <div class="nos-pill-s" data-i18n="p3s">Café italiano de importación directa, desayunos caseros y tardes de sobremesa largas.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nos-quote">
+                <span data-i18n="quote">"El sitio es muy lindo, la atención inmejorable siempre con un sonrisa para atenderte. ¡Las pizzas super buenas! Vamos para repetir siempre."</span>
+                <div class="nos-cite" data-i18n="quote_cite">— Yazmina</div>
+                <br>
+                <span data-i18n="quote">"Hemos ido hoy a comer recomendados por mi hermano y mi cuñada. La experiencia ha sido inmejorable. Calidad del producto, elaboración y trato en sala excelente; la camarera, te aconseja y explica con paciencia la elaboración del plato, ingredientes, etc. La experiencia ha sido inmejorable. Repetiremos seguro. ¡Enhorabuena!"</span>
+                <div class="nos-cite" data-i18n="quote_cite">— Helena</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="dash">
+
+    <div class="carta-wrap" id="carta">
+        <div class="carta-inner">
+            <p class="sec-kicker" data-i18n="carta_kicker">Nuestro menú</p>
+            <h2 class="sec-h" data-i18n="carta_h">La carta</h2>
+            <p class="sec-p" data-i18n="carta_p">Cambia con la temporada y lo que llegue fresco ese día. Si no está aquí, pregunta.</p>
+            <div class="tabs">
+                <button class="tab on" onclick="showTab('pizzas', this)" data-i18n="tab_pizza">🍕 Pizzas</button>
+                <button class="tab" onclick="showTab('pasta', this)" data-i18n="tab_pasta">🍝 Pasta</button>
+                <button class="tab" onclick="showTab('entrantes', this)" data-i18n="tab_ent">🫒 Entrantes</button>
+                <button class="tab" onclick="showTab('postres', this)" data-i18n="tab_post">🍮 Postres</button>
+            </div>
+            <div id="t-pizzas" class="menu-grid">
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Margarita</span>
+                        <span class="mcard-price">9.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, albahaca</p>
+                    <div class="badges">
+                        <span class="badge bs" data-i18n="veg">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Gourmet</span>
+                        <span class="mcard-price">16.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, gambas, rúcula, polvo de aceitunas negras</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">crustáceos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Re Carlo</span>
+                        <span class="mcard-price">17.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, culatello, perlas de búfala, albahaca</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">crustáceos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Marinera</span>
+                        <span class="mcard-price">10.50 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, anchoas, alcaparras, orégano, albahaca</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">pescado</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Capricciosa</span>
+                        <span class="mcard-price">15.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, prosciutto cotto, champiñones, aceitunas negras</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Mare</span>
+                        <span class="mcard-price">18.50 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, pulpo, gambas</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">crustáceos</span>
+                        <span class="badge bd">moluscos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Quattro Formaggi</span>
+                        <span class="mcard-price">17.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, gorgonzola, cheddar, provolone</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Quattro Stagioni</span>
+                        <span class="mcard-price">16.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, champiñones, aceitunas negras, alcachofas, prosciutto cotto, albahaca</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Diavola</span>
+                        <span class="mcard-price">15.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, salame picante</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">43100 Parma</span>
+                        <span class="mcard-price">17.50 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, salame picante</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">soja</span>
+                        <span class="badge bd">sulfitos</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Vegetariana</span>
+                        <span class="mcard-price">14.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Tomate, mozzarella, calabacín, berenjena, mousse de mostaza</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">mostaza</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Toscanini</span>
+                        <span class="mcard-price">17.00 €</span>
+                    </div>
+                    <p class="mcard-desc">Mozzarella, gorgonzola, nueces, cebolla caramelizada</p>
+                    <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">frutos de cáscara</span>
+                    </div>
+                </div>
+            </div>
+            <div id="t-pasta" class="menu-grid" style="display:none">
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Tagliatelle al Ragù</span>
+                        <span class="mcard-price">13 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="pa1">Pasta fresca artesanal con ragù de ternera gallega cocido 6 horas. Parmigiano rallado al momento.</p>
+                    <div class="badges">
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Pappardelle de Zorza</span>
+                        <span class="mcard-price">14 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="pa2">Zorza gallega, tomate cherry, pimiento de Herbón y scamorza. Fusión que funciona de verdad.</p>
+                    <div class="badges">
+                        <span class="badge bs">fusión gall-ita</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Gnocchi al Pesto del Mar</span>
+                        <span class="mcard-price">12 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="pa3">Gnocchi de patata con pesto de algas gallegas, piñones y parmigiano. Sorprendente.</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Cacio e Pepe</span>
+                        <span class="mcard-price">11 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="pa4">Solo tres ingredientes: pasta, queso y pimienta. Cuando algo es así de simple, tiene que ser perfecto.</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                    </div>
+                </div>
+            </div>
+            <div id="t-entrantes" class="menu-grid" style="display:none">
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Burrata con Tomate</span>
+                        <span class="mcard-price">9 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="en1">Burrata fresca, tomate corazón de buey gallego, sal Maldon y aceite de Sicilia. Nada más, nada menos.</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Bruschetta de la Aldea</span>
+                        <span class="mcard-price">6 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="en2">Pan de masa madre local, tomate rallado, ajo y rúcula. Para picar mientras esperas.</p>
+                    <div class="badges">
+                        <span class="badge bs">vegetariana</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Antipasto Misto</span>
+                        <span class="mcard-price">11 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="en3">Embutidos italianos, tetilla, aceitunas, grissini y mermelada de higo. Para compartir (o no).</p>
+                </div>
+            </div>
+            <div id="t-postres" class="menu-grid" style="display:none">
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Tiramisù de la Casa</span>
+                        <span class="mcard-price">5 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="po1">Receta familiar, mascarpone, café espresso y un secreto que no contamos. El favorito del local.</p>
+                    <div class="badges">
+                        <span class="badge bs">favorito</span>
+                    </div>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Tarta de Santiago con Lemon Curd</span>
+                        <span class="mcard-price">5 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="po2">El clásico gallego con un toque cítrico italiano. Fusión que pide repetir.</p>
+                </div>
+                <div class="mcard">
+                    <div class="mcard-top">
+                        <span class="mcard-name">Panna Cotta</span>
+                        <span class="mcard-price">5 €</span>
+                    </div>
+                    <p class="mcard-desc" data-i18n="po3">Suave y fresca, con coulis de moras y arándanos de temporada gallega.</p>
+                    <div class="badges">
+                        <span class="badge bv">vegetariana</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="dash">
+
+    <div class="wrap" id="bar">
+        <p class="sec-kicker" data-i18n="bar_kicker">Nuestro bar</p>
+        <h2 class="sec-h" data-i18n="bar_h">Quédate un poco más</h2>
+        <p class="sec-p" data-i18n="bar_p">Un bar de aldea con alma italiana. Sin pretensiones, con mucho sabor.</p>
+        <div class="bar-grid">
+            <div class="bar-card">
+                <div class="bar-ico">🍺</div>
+                <div class="bar-n" data-i18n="b1n">Cerveza de barril</div>
+                <div class="bar-s" data-i18n="b1s">De toda la vida y artesanas rotativas de Galicia</div>
+            </div>
+            <div class="bar-card">
+                <div class="bar-ico">🍷</div>
+                <div class="bar-n" data-i18n="b2n">Albariño & vinos</div>
+                <div class="bar-s" data-i18n="b2s">Rías Baixas, Ribeira Sacra y tintos italianos escogidos</div>
+            </div>
+            <div class="bar-card">
+                <div class="bar-ico">🍊</div>
+                <div class="bar-n">Aperol Spritz</div>
+                <div class="bar-s" data-i18n="b3s">El clásico italiano para el aperitivo. Con prosecco bien frío.</div>
+            </div>
+            <div class="bar-card">
+                <div class="bar-ico">☕</div>
+                <div class="bar-n" data-i18n="b4n">Café italiano</div>
+                <div class="bar-s" data-i18n="b4s">Espresso, cappuccino, macchiato. Importación directa.</div>
+            </div>
+            <div class="bar-card">
+                <div class="bar-ico">🌿</div>
+                <div class="bar-n" data-i18n="b5n">Cócteles de la casa</div>
+                <div class="bar-s" data-i18n="b5s">Hugo, Negroni, Tinto de verano… lo que te apetezca</div>
+            </div>
+            <div class="bar-card">
+                <div class="bar-ico">🥤</div>
+                <div class="bar-n" data-i18n="b6n">Sin alcohol</div>
+                <div class="bar-s" data-i18n="b6s">Limonadas caseras, agua de Mondariz y mocktails de frutas</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="dash">
+
+    <div class="del-band" id="delivery">
+        <h2 data-i18n="del_h">Pizza a domicilio</h2>
+        <p data-i18n="del_p">Llevamos lo mejor de nuestro horno a tu puerta. Llama con 30 minutos de antelación y listo.</p>
+        <div class="del-chips">
+            <span class="del-chip" data-i18n="dc1">📍 Bergondo y alrededores</span>
+            <span class="del-chip" data-i18n="dc2">⏱ Pedir con 30 min de antelación</span>
+            <span class="del-chip" data-i18n="dc3">🍕 Mínimo 2 pizzas</span>
+        </div>
+        <button class="btn-white" onclick="window.open('tel:+34981791603')" data-i18n="del_btn">📞 Llamar: 981 79 16 03</button>
+    </div>
+
+    <hr class="dash">
+
+    <div class="wrap" id="contacto">
+        <p class="sec-kicker" data-i18n="con_kicker">Dónde estamos</p>
+        <h2 class="sec-h" data-i18n="con_h">Ven a vernos</h2>
+        <p class="sec-p" data-i18n="con_p">En Bergondo, A Coruña. Aparcamiento fácil y mucha calma gallega garantizada.</p>
+        <div class="contact-grid">
+            <div class="cinfo">
+                <div class="crow">
+                    <div class="cico">📍</div>
+                    <div>
+                        <div class="clbl" data-i18n="c1l">Dirección</div>
+                        <div class="cval">Aldea Cornide, 1, 15165, A Coruña</div>
+                    </div>
+                </div>
+                <div class="crow">
+                    <div class="cico">📞</div>
+                    <div>
+                        <div class="clbl" data-i18n="c2l">Teléfono</div>
+                        <div class="cval"><a href="tel:+34981791603">981 79 16 03</a></div>
+                    </div>
+                </div>
+                <div class="crow">
+                    <div class="cico">📱</div>
+                    <div>
+                        <div class="clbl">Instagram</div>
+                        <div class="cval"><a href="https://www.instagram.com/amoresaporee" target="_blank">@amoresaporee</a></div>
+                    </div>
+                </div>
+                <div class="hor-block">
+                    <div class="hor-title" data-i18n="hor_t">Horario</div>
+                    <table class="hor-table" id="hor-table">
+                        <tr data-day="1">
+                            <td data-i18n="d_lun">Lunes</td>
+                            <td>8:00 – 21:30</td>
+                        </tr>
+                        <tr data-day="2">
+                            <td data-i18n="d_mar">Martes</td>
+                            <td>8:00 – 21:30</td>
+                        </tr>
+                        <tr data-day="3" class="cerrado">
+                            <td data-i18n="d_mie">Miércoles</td>
+                            <td data-i18n="cerrado">Cerrado</td>
+                        </tr>
+                        <tr data-day="4">
+                            <td data-i18n="d_jue">Jueves</td>
+                            <td>8:00 – 21:30</td>
+                        </tr>
+                        <tr data-day="5">
+                            <td data-i18n="d_vie">Viernes</td>
+                            <td>8:00 – 23:00</td>
+                        </tr>
+                        <tr data-day="6">
+                            <td data-i18n="d_sab">Sábado</td>
+                            <td>9:00 – 23:00</td>
+                        </tr>
+                        <tr data-day="0">
+                            <td data-i18n="d_dom">Domingo</td>
+                            <td>9:00 – 21:30</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="map-box">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#1a4fa0" stroke-width="1.5">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                    <circle cx="12" cy="9" r="2.5" />
+                </svg>
+                <p>
+                    Amore e Sapore<br>
+                    Aldea Cornide, 1, 15165<br>
+                    A Coruña, Galicia
+                </p>
+                <a href="https://www.google.com/maps/place/Aldea+Cornide,+1,+15165,+A+Coru%C3%B1a" target="_blank" data-i18n="map_link">Abrir en Google Maps</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="ft-logo">Amore e Sapore</div>
+        <div class="ft-sub" data-i18n="ft_sub">Pizzería cafetería italiana · Aldea Cornide, 1, 15165, A Coruña</div>
+        <div class="ft-links">
+            <a onclick="ir('nosotros')" data-i18n="nav_nos">Nosotros</a>
+            <a onclick="ir('carta')" data-i18n="nav_carta">Carta</a>
+            <a onclick="ir('bar')" data-i18n="nav_bar">Bar</a>
+            <a onclick="ir('delivery')" data-i18n="del_h">Delivery</a>
+            <a onclick="ir('contacto')" data-i18n="nav_contact">Contacto</a>
+            <a href="https://www.instagram.com/amoresaporee" target="_blank">Instagram</a>
+        </div>
+        <div class="ft-copy" data-i18n="ft_copy">© 2026 Amore e Sapore · Hecho con amor entre Italia y Galicia 🤌</div>
+    </footer>
+
+    <script>
+        const T = {
+            es: {
+                nav_nos: "Nosotros",
+                nav_carta: "Carta",
+                nav_bar: "Bar",
+                nav_contact: "Contacto",
+                nav_order: "🍕 Pedir pizza",
+                hero_loc: "Bergondo, A Coruña",
+                hero_slogan: "Pizzería cafetería donde disfrutar de pizzas, café y comida italiana en un ambiente acogedor y familiar.",
+                hero_btn1: "Ver la carta",
+                hero_btn2: "Cómo llegar",
+                v1: "🌿 Todo fresco",
+                v2: "🍕 Delivery a domicilio",
+                v3: "☕ Cafetería",
+                v4: "🇮🇹 🤝 🇪🇸 Dos culturas",
+                nos_kicker: "Nuestra historia",
+                nos_h: "Medio italiano, medio gallego, todo nuestro",
+                nos_p: "Tu dosis diaria de amore y sapore. Ven con sueño… y despierta feliz. Ven con hambre… y repite.",
+                p1t: "Horno de piedra",
+                p1s: "La masa descansa 48 horas. La pizza se hace en 90 segundos. La espera merece la pena.",
+                p2t: "Del productor a la mesa",
+                p2s: "Verduras, quesos y carnes de Galicia. Lo que no se consigue aquí, viene directo de Italia.",
+                p3t: "Cafetería con alma",
+                p3s: "Café italiano de importación directa, desayunos caseros y tardes de sobremesa largas.",
+                quote: '"El sitio es muy lindo, la atención inmejorable siempre con un sonrisa para atenderte. ¡Las pizzas super buenas! Vamos para repetir siempre."',
+                quote_cite: "— Yazmina",
+                carta_kicker: "Nuestro menú",
+                carta_h: "La carta",
+                carta_p: "Cambia con la temporada y lo que llegue fresco ese día. Si no está aquí, pregunta.",
+                tab_pizza: "🍕 Pizzas",
+                tab_pasta: "🍝 Pasta",
+                tab_ent: "🫒 Entrantes",
+                tab_post: "🍮 Postres",
+                pa1: "Pasta fresca artesanal con ragù de ternera gallega cocido 6 horas. Parmigiano rallado al momento.",
+                pa2: "Zorza gallega, tomate cherry, pimiento de Herbón y scamorza. Fusión que funciona de verdad.",
+                pa3: "Gnocchi de patata con pesto de algas gallegas, piñones y parmigiano. Sorprendente.",
+                pa4: "Solo tres ingredientes: pasta, queso y pimienta. Cuando algo es así de simple, tiene que ser perfecto.",
+                en1: "Burrata fresca, tomate corazón de buey gallego, sal Maldon y aceite de Sicilia. Nada más, nada menos.",
+                en2: "Pan de masa madre local, tomate rallado, ajo y rúcula. Para picar mientras esperas.",
+                en3: "Embutidos italianos, tetilla, aceitunas, grissini y mermelada de higo. Para compartir (o no).",
+                po1: "Receta familiar, mascarpone, café espresso y un secreto que no contamos. El favorito del local.",
+                po2: "El clásico gallego con un toque cítrico italiano. Fusión que pide repetir.",
+                po3: "Suave y fresca, con coulis de moras y arándanos de temporada gallega.",
+                bar_kicker: "Nuestro bar",
+                bar_h: "Quédate un poco más",
+                bar_p: "Un bar de aldea con alma italiana. Sin pretensiones, con mucho sabor.",
+                b1n: "Cerveza de barril",
+                b1s: "De toda la vida y artesanas rotativas de Galicia",
+                b2n: "Albariño & vinos",
+                b2s: "Rías Baixas, Ribeira Sacra y tintos italianos escogidos",
+                b3s: "El clásico italiano para el aperitivo. Con prosecco bien frío.",
+                b4n: "Café italiano",
+                b4s: "Espresso, cappuccino, macchiato. Importación directa.",
+                b5n: "Cócteles de la casa",
+                b5s: "Hugo, Negroni, Tinto de verano… lo que te apetezca",
+                b6n: "Sin alcohol",
+                b6s: "Limonadas caseras, agua de Mondariz y mocktails de frutas",
+                del_h: "Pizza a domicilio",
+                del_p: "Llevamos lo mejor de nuestro horno a tu puerta. Llama con 30 minutos de antelación y listo.",
+                dc1: "📍 Bergondo y alrededores",
+                dc2: "⏱ Pedir con 30 min de antelación",
+                dc3: "🍕 Mínimo 2 pizzas",
+                del_btn: "📞 Llamar: 981 79 16 03",
+                con_kicker: "Dónde estamos",
+                con_h: "Ven a vernos",
+                con_p: "En Bergondo, A Coruña. Aparcamiento fácil y mucha calma gallega garantizada.",
+                c1l: "Dirección",
+                c2l: "Teléfono",
+                hor_t: "Horario",
+                d_lun: "Lunes",
+                d_mar: "Martes",
+                d_mie: "Miércoles",
+                d_jue: "Jueves",
+                d_vie: "Viernes",
+                d_sab: "Sábado",
+                d_dom: "Domingo",
+                cerrado: "Cerrado",
+                map_link: "Abrir en Google Maps",
+                ft_sub: "Pizzería cafetería italiana · Aldea Cornide, 1, 15165, A Coruña",
+                ft_copy: "© 2026 Amore e Sapore · Hecho con amor entre Italia y Galicia 🤌",
+                veg: "vegetariana",
+                del: "delivery",
+                esp: "especialidad",
+                sor: "sorpresa",
+                strip: "✦ masa fermentada 48 horas &nbsp;&nbsp; ✦ producto gallego fresco &nbsp;&nbsp; ✦ horno de piedra artesanal &nbsp;&nbsp; ✦ delivery en Bergondo &nbsp;&nbsp; ✦ cafetería abierta cada día &nbsp;&nbsp; ✦ italiano de corazón, gallego de alma &nbsp;&nbsp;"
+            },
+            gl: {
+                nav_nos: "Nós",
+                nav_carta: "Carta",
+                nav_bar: "Bar",
+                nav_contact: "Contacto",
+                nav_order: "🍕 Pedir pizza",
+                hero_loc: "Bergondo, A Coruña",
+                hero_slogan: "Pizzaría cafetería onde gozar de pizzas, café e comida italiana nun ambiente acolledor e familiar.",
+                hero_btn1: "Ver a carta",
+                hero_btn2: "Como chegar",
+                v1: "🌿 Todo fresco",
+                v2: "🍕 Delivery a domicilio",
+                v3: "☕ Cafetería",
+                v4: "🇮🇹 🤝 🇪🇸 Dúas culturas",
+                nos_kicker: "A nosa historia",
+                nos_h: "Medio italiano, medio galego, todo noso",
+                nos_p: "Nacín entre a Toscana e as Rías Altas. Crecín aprendendo a facer pasta con miña nona e a escoller o mellor polbo coa miña avoa. Un día decidín xuntar as dúas cousas nun sitio tranquilo de Bergondo. E aquí estamos.",
+                p1t: "Forno de pedra",
+                p1s: "A masa descansa 48 horas. A pizza faise en 90 segundos. A espera merece a pena.",
+                p2t: "Do produtor á mesa",
+                p2s: "Verduras, queixos e carnes de Galicia. O que non se consegue aquí, vén directo de Italia.",
+                p3t: "Cafetería con alma",
+                p3s: "Café italiano de importación directa, almorzo caseiro e tardes de sobremesa longas.",
+                quote: '"Abres a porta e tes a sensación de que a avoa de alguén está cociñando na cociña. Que xa quixera eu que fose a miña."',
+                quote_cite: "— Un cliente que voltou tres veces esa mesma semana",
+                carta_kicker: "O noso menú",
+                carta_h: "A carta",
+                carta_p: "Cambia coa tempada e o que chegue fresco ese día. Se non está aquí, pregunta.",
+                tab_pizza: "🍕 Pizzas",
+                tab_pasta: "🍝 Pasta",
+                tab_ent: "🫒 Entrantes",
+                tab_post: "🍮 Postres",
+                pa1: "Pasta fresca artesanal con ragù de ternera galega cocido 6 horas. Parmigiano rallado ao momento.",
+                pa2: "Zorza galega, tomate cherry, pemento de Herbón e scamorza. Fusión que funciona de verdade.",
+                pa3: "Gnocchi de pataca con pesto de algas galegas, piñóns e parmigiano. Sorprendente.",
+                pa4: "Só tres ingredientes: pasta, queixo e pementa. Cando algo é así de sinxelo, ten que ser perfecto.",
+                en1: "Burrata fresca, tomate corazón de buey galego, sal Maldon e aceite de Sicilia. Nada máis, nada menos.",
+                en2: "Pan de masa madre local, tomate rallado, allo e rucula. Para picar mentres esperas.",
+                en3: "Embutidos italianos, tetilla, olivas, grissini e marmelada de figo. Para compartir (ou non).",
+                po1: "Receita familiar, mascarpone, café espresso e un segredo que non contamos. O favorito do local.",
+                po2: "O clásico galego cun toque cítrico italiano. Fusión que pide repetir.",
+                po3: "Suave e fresca, con coulis de moras e arándanos de tempada galega.",
+                bar_kicker: "O noso bar",
+                bar_h: "Quédate un pouquiño máis",
+                bar_p: "Un bar de aldea con alma italiana. Sen pretensións, con moito sabor.",
+                b1n: "Cervexa de barril",
+                b1s: "De toda a vida e artesáns rotativas de Galicia",
+                b2n: "Albariño & viños",
+                b2s: "Rías Baixas, Ribeira Sacra e tintos italianos escollidos",
+                b3s: "O clásico italiano para o aperitivo. Con prosecco ben frío.",
+                b4n: "Café italiano",
+                b4s: "Espresso, cappuccino, macchiato. Importación directa.",
+                b5n: "Cócteles da casa",
+                b5s: "Hugo, Negroni, Tinto de verano… o que che apeteza",
+                b6n: "Sen alcohol",
+                b6s: "Limonadas caseiras, augua de Mondariz e mocktails de froitas",
+                del_h: "Pizza ao domicilio",
+                del_p: "Levamos o mellor do noso forno á túa porta. Chama con 30 minutos de antelación e listo.",
+                dc1: "📍 Bergondo e arredores",
+                dc2: "⏱ Pedir con 30 min de avance",
+                dc3: "🍕 Mínimo 2 pizzas",
+                del_btn: "📞 Chamar: 981 79 16 03",
+                con_kicker: "Onde estamos",
+                con_h: "Ven a vernos",
+                con_p: "En Bergondo, A Coruña. Estacionamento fácil e moita calma galega garantida.",
+                c1l: "Dirección",
+                c2l: "Teléfono",
+                hor_t: "Horario",
+                d_lun: "Luns",
+                d_mar: "Martes",
+                d_mie: "Mércores",
+                d_jue: "Xoves",
+                d_vie: "Venres",
+                d_sab: "Sábado",
+                d_dom: "Domingo",
+                cerrado: "Pechado",
+                map_link: "Abrir en Google Maps",
+                ft_sub: "Pizzaría cafetería italiana · Aldea Cornide, 1, 15165, A Coruña",
+                ft_copy: "© 2026 Amore e Sapore · Feito con amor entre Italia e Galicia 🤌",
+                veg: "vexetariana",
+                del: "delivery",
+                esp: "especialidade",
+                sor: "sorpresa",
+                strip: "✦ masa fermentada 48 horas &nbsp;&nbsp; ✦ produto galego fresco &nbsp;&nbsp; ✦ forno de pedra artesanal &nbsp;&nbsp; ✦ delivery en Bergondo &nbsp;&nbsp; ✦ cafetería aberta cada día &nbsp;&nbsp; ✦ italiano de corazón, galego de alma &nbsp;&nbsp;"
+            },
+            it: {
+                nav_nos: "Chi siamo",
+                nav_carta: "Menu",
+                nav_bar: "Bar",
+                nav_contact: "Contatti",
+                nav_order: "🍕 Ordina pizza",
+                hero_loc: "Bergondo, A Coruña",
+                hero_slogan: "Pizzeria caffetteria dove gustare pizze, caffè e cucina italiana in un'atmosfera accogliente e familiare.",
+                hero_btn1: "Vedi il menu",
+                hero_btn2: "Come arrivare",
+                v1: "🌿 Tutto fresco",
+                v2: "🍕 Consegna a domicilio",
+                v3: "☕ Caffetteria",
+                v4: "🇮🇹 🤝 🇪🇸 Due culture",
+                nos_kicker: "La nostra storia",
+                nos_h: "Mezzo italiano, mezzo galiziano, tutto nostro",
+                nos_p: "Nací entre la Toscana y las Rías Altas. Crecí aprendiendo a hacer pasta con mi nona y a elegir el mejor pulpo con mi abuela. Un día decidí juntar las dos cosas en un sitio tranquilo de Bergondo. Y aquí estamos.",
+                p1t: "Forno a pietra",
+                p1s: "L'impasto riposa 48 ore. La pizza si cuoce in 90 secondi. L'attesa vale la pena.",
+                p2t: "Dal produttore alla tavola",
+                p2s: "Verdure, formaggi e carni di Galizia. Quello che non si trova qui arriva direttamente dall'Italia.",
+                p3t: "Caffetteria con anima",
+                p3s: "Caffè italiano di importazione diretta, colazioni casalinghe e pomeriggi lunghi.",
+                quote: '"Apri la porta e hai la sensazione che la nonna di qualcuno stia cucinando in cucina. Magari fosse la mia."',
+                quote_cite: "— Un cliente tornato tre volte nella stessa settimana",
+                carta_kicker: "Il nostro menu",
+                carta_h: "La carta",
+                carta_p: "Cambia con la stagione e con quello che arriva fresco quel giorno. Se non c'è, chiedi.",
+                tab_pizza: "🍕 Pizze",
+                tab_pasta: "🍝 Pasta",
+                tab_ent: "🫒 Antipasti",
+                tab_post: "🍮 Dolci",
+                pa1: "Pasta fresca artigianale con ragù di manzo galiziano cotto 6 ore. Parmigiano grattugiato al momento.",
+                pa2: "Zorza gallega, pomodorini, peperone di Herbón e scamorza. Una fusione che funziona davvero.",
+                pa3: "Gnocchi di patate con pesto di alghe galleghe, pinoli e parmigiano. Sorprendente.",
+                pa4: "Solo tre ingredienti: pasta, formaggio e pepe. Quando qualcosa è così semplice, deve essere perfetto.",
+                en1: "Burrata fresca, pomodoro cuore di bue gallego, sale Maldon e olio di Sicilia. Niente di più.",
+                en2: "Pane di lievito madre locale, pomodoro grattugiato, aglio e rucola. Per spizzicare.",
+                en3: "Salumi italiani, tetilla, olive, grissini e marmellata di fichi. Da condividere (o meno).",
+                po1: "Ricetta di famiglia, mascarpone, caffè espresso e un segreto che non sveliamo. Il preferito.",
+                po2: "Il classico gallego con un tocco agrumato italiano. Fa venire voglia di bis.",
+                po3: "Morbida e fresca, con coulis di more e mirtilli di stagione gallega.",
+                bar_kicker: "Il nostro bar",
+                bar_h: "Fermati ancora un po'",
+                bar_p: "Un bar di borgo con anima italiana. Senza pretese, con molto sapore.",
+                b1n: "Birra alla spina",
+                b1s: "Classica e artigianale a rotazione dalla Galizia",
+                b2n: "Albariño & vini",
+                b2s: "Rías Baixas, Ribeira Sacra e rossi italiani selezionati",
+                b3s: "Il classico italiano per l'aperitivo. Con prosecco ben freddo.",
+                b4n: "Caffè italiano",
+                b4s: "Espresso, cappuccino, macchiato. Importazione diretta.",
+                b5n: "Cocktail della casa",
+                b5s: "Hugo, Negroni, Spritz… quello che ti va",
+                b6n: "Analcolici",
+                b6s: "Limonata casalinga, acqua di Mondariz e mocktail di frutta",
+                del_h: "Pizza a domicilio",
+                del_p: "Portiamo il meglio del nostro forno a casa tua. Chiama con 30 minuti di anticipo.",
+                dc1: "📍 Bergondo e dintorni",
+                dc2: "⏱ Ordine con 30 min di anticipo",
+                dc3: "🍕 Minimo 2 pizze",
+                del_btn: "📞 Chiama: 981 79 16 03",
+                con_kicker: "Dove siamo",
+                con_h: "Vieni a trovarci",
+                con_p: "A Bergondo, A Coruña. Parcheggio facile e tanta calma gallega garantita.",
+                c1l: "Indirizzo",
+                c2l: "Telefono",
+                hor_t: "Orari",
+                d_lun: "Lunedì",
+                d_mar: "Martedì",
+                d_mie: "Mercoledì",
+                d_jue: "Giovedì",
+                d_vie: "Venerdì",
+                d_sab: "Sabato",
+                d_dom: "Domenica",
+                cerrado: "Chiuso",
+                map_link: "Apri su Google Maps",
+                ft_sub: "Pizzeria caffetteria italiana · Aldea Cornide, 1, 15165, A Coruña",
+                ft_copy: "© 2026 Amore e Sapore · Fatto con amore tra Italia e Galizia 🤌",
+                veg: "vegetariana",
+                del: "consegna",
+                esp: "specialità",
+                sor: "sorpresa",
+                strip: "✦ impasto fermentato 48 ore &nbsp;&nbsp; ✦ prodotti gallegos freschi &nbsp;&nbsp; ✦ forno a pietra artigianale &nbsp;&nbsp; ✦ consegne a Bergondo &nbsp;&nbsp; ✦ caffetteria aperta ogni giorno &nbsp;&nbsp; ✦ italiano di cuore, gallego d'anima &nbsp;&nbsp;"
+            },
+            en: {
+                nav_nos: "About",
+                nav_carta: "Menu",
+                nav_bar: "Bar",
+                nav_contact: "Contact",
+                nav_order: "🍕 Order pizza",
+                hero_loc: "Bergondo, A Coruña",
+                hero_slogan: "Pizzeria and café where you can enjoy pizzas, coffee and Italian food in a cosy, family-friendly setting.",
+                hero_btn1: "See the menu",
+                hero_btn2: "How to find us",
+                v1: "🌿 All fresh",
+                v2: "🍕 Home delivery",
+                v3: "☕ Café",
+                v4: "🇮🇹 🤝 🇪🇸 Two cultures",
+                nos_kicker: "Our story",
+                nos_h: "Half Italian, half Galician, all ours",
+                nos_p: "I was born between Tuscany and the Galician Rías. I grew up learning to make pasta with my nona and to pick the best octopus with my grandmother. One day I decided to bring the two together in a quiet village in Bergondo. And here we are.",
+                p1t: "Stone oven",
+                p1s: "The dough rests 48 hours. The pizza bakes in 90 seconds. Worth every minute.",
+                p2t: "From farm to table",
+                p2s: "Vegetables, cheeses and meats from Galicia. Whatever can't be sourced here comes straight from Italy.",
+                p3t: "Café with soul",
+                p3s: "Direct-import Italian coffee, homemade breakfasts and long, lazy afternoons.",
+                quote: '"You open the door and get the feeling that somebody\'s grandmother is cooking in the kitchen. Wish it were mine."',
+                quote_cite: "— A customer who came back three times that same week",
+                carta_kicker: "Our menu",
+                carta_h: "The menu",
+                carta_p: "Changes with the season and whatever's fresh that day. If it's not here, just ask.",
+                tab_pizza: "🍕 Pizzas",
+                tab_pasta: "🍝 Pasta",
+                tab_ent: "🫒 Starters",
+                tab_post: "🍮 Desserts",
+                pa1: "Handmade fresh pasta with Galician beef ragù slow-cooked 6 hours. Parmigiano grated to order.",
+                pa2: "Galician zorza sausage, cherry tomato, Herbón pepper and scamorza. Fusion that actually works.",
+                pa3: "Potato gnocchi with Galician seaweed pesto, pine nuts and parmigiano. Surprising.",
+                pa4: "Just three ingredients: pasta, cheese and pepper. When something is this simple, it has to be perfect.",
+                en1: "Fresh burrata, Galician ox-heart tomato, Maldon salt and Sicilian olive oil. Nothing more.",
+                en2: "Local sourdough, grated tomato, garlic and rocket. Something to nibble while you wait.",
+                en3: "Italian charcuterie, tetilla, olives, grissini and fig jam. To share (or not).",
+                po1: "Family recipe, mascarpone, espresso and a secret we won't share. The local favourite.",
+                po2: "The Galician classic with an Italian citrus twist. Makes you want seconds.",
+                po3: "Smooth and fresh, with Galician seasonal blackberry and blueberry coulis.",
+                bar_kicker: "Our bar",
+                bar_h: "Stay a little longer",
+                bar_p: "A village bar with an Italian soul. Unpretentious, full of flavour.",
+                b1n: "Draft beer",
+                b1s: "Classic and rotating craft beers from Galicia",
+                b2n: "Albariño & wines",
+                b2s: "Rías Baixas, Ribeira Sacra and selected Italian reds",
+                b3s: "The Italian classic for aperitivo hour. With ice-cold prosecco.",
+                b4n: "Italian coffee",
+                b4s: "Espresso, cappuccino, macchiato. Direct import.",
+                b5n: "House cocktails",
+                b5s: "Hugo, Negroni, Spritz… whatever you fancy",
+                b6n: "Alcohol-free",
+                b6s: "Homemade lemonade, Mondariz water and fruit mocktails",
+                del_h: "Pizza delivery",
+                del_p: "We bring the best of our oven to your door. Call 30 minutes ahead.",
+                dc1: "📍 Bergondo & surroundings",
+                dc2: "⏱ Order 30 min in advance",
+                dc3: "🍕 Minimum 2 pizzas",
+                del_btn: "📞 Call: 981 79 16 03",
+                con_kicker: "Where we are",
+                con_h: "Come and see us",
+                con_p: "In Bergondo, A Coruña. Easy parking and plenty of Galician calm guaranteed.",
+                c1l: "Address",
+                c2l: "Phone",
+                hor_t: "Opening hours",
+                d_lun: "Monday",
+                d_mar: "Tuesday",
+                d_mie: "Wednesday",
+                d_jue: "Thursday",
+                d_vie: "Friday",
+                d_sab: "Saturday",
+                d_dom: "Sunday",
+                cerrado: "Closed",
+                map_link: "Open in Google Maps",
+                ft_sub: "Italian pizzeria & café · Aldea Cornide, 1, 15165, A Coruña",
+                ft_copy: "© 2026 Amore e Sapore · Made with love between Italy and Galicia 🤌",
+                veg: "vegetarian",
+                del: "delivery",
+                esp: "speciality",
+                sor: "surprise",
+                strip: "✦ 48-hour fermented dough &nbsp;&nbsp; ✦ fresh Galician produce &nbsp;&nbsp; ✦ artisan stone oven &nbsp;&nbsp; ✦ delivery in Bergondo &nbsp;&nbsp; ✦ café open every day &nbsp;&nbsp; ✦ Italian at heart, Galician by soul &nbsp;&nbsp;"
+            }
+        };
+
+        function setLang(l) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.getAttribute('data-i18n');
+                if (T[l] && T[l][k] !== undefined) el.innerHTML = T[l][k];
+            });
+            const st = document.getElementById('strip-txt');
+            if (st && T[l].strip) st.innerHTML = T[l].strip + T[l].strip;
+            highlightToday();
+        }
+
+        function ir(id) {
+            const e = document.getElementById(id);
+            if (e) e.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function showTab(tab, btn) {
+            ['pizzas', 'pasta', 'entrantes', 'postres'].forEach(t => {
+                const e = document.getElementById('t-' + t);
+                if (e) e.style.display = 'none';
+            });
+            document.querySelectorAll('.tab').forEach(b => b.classList.remove('on'));
+            const el = document.getElementById('t-' + tab);
+            if (el) el.style.display = 'grid';
+            btn.classList.add('on');
+        }
+
+        function highlightToday() {
+            const day = new Date().getDay();
+            document.querySelectorAll('#hor-table tr').forEach(r => {
+                r.classList.remove('hoy');
+                if (parseInt(r.getAttribute('data-day')) === day) r.classList.add('hoy');
+            });
+        }
+
+        highlightToday();
+
+        const COLORS = ['#e85d35', '#f5c842', '#c0392b', '#e8a020', '#3a8c3f', '#1a4fa0', '#e85d35', '#f5c842'];
+        const TOPS = ['🍅', '🧀', '🌿', '🫒', '🍖', '🌶️', '🧅', '🫑'];
+        const N = 8;
+        let drawn = 0;
+
+        function arc(cx, cy, r, s, e) {
+            const a = s * Math.PI / 180, b = e * Math.PI / 180;
+            const x1 = cx + r * Math.cos(a), y1 = cy + r * Math.sin(a), x2 = cx + r * Math.cos(b), y2 = cy + r * Math.sin(b);
+            return `M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${e - s > 180 ? 1 : 0} 1 ${x2},${y2} Z`;
+        }
+
+        const msgs = ['Preparando los ingredientes...', 'Amasando la masa...', 'Horneando la pizza...', '¡Lista para servir!'];
+
+        function drawSlice() {
+            if (drawn >= N) {
+                setTimeout(() => {
+                    const l = document.getElementById('loader');
+                    if (l) l.classList.add('out');
+                    setTimeout(() => {
+                        if (l) l.remove();
+                    }, 600);
+                }, 400);
+                return;
+            }
+            const g = document.getElementById('slices');
+            const s = drawn * (360 / N) - 90, e = s + (360 / N);
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p.setAttribute('d', arc(50, 50, 44, s, e));
+            p.setAttribute('fill', COLORS[drawn]);
+            p.setAttribute('stroke', '#fff');
+            p.setAttribute('stroke-width', '1');
+            g.appendChild(p);
+            const mid = (s + e) / 2 * Math.PI / 180;
+            const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            t.setAttribute('x', 50 + 28 * Math.cos(mid));
+            t.setAttribute('y', 50 + 28 * Math.sin(mid) + 5);
+            t.setAttribute('text-anchor', 'middle');
+            t.setAttribute('font-size', '11');
+            t.textContent = TOPS[drawn];
+            g.appendChild(t);
+            const lt = document.getElementById('loader-txt');
+            if (lt) lt.textContent = msgs[Math.min(Math.floor(drawn * msgs.length / N), msgs.length - 1)];
+            drawn++;
+            setTimeout(drawSlice, 210);
+        }
+
+        drawSlice();
+    </script>
+</body>
+</html>
