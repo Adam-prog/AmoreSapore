@@ -932,9 +932,6 @@
             <p class="sec-p" data-i18n="carta_p">Cambia con la temporada y lo que llegue fresco ese día. Si no está aquí, pregunta.</p>
             <div class="tabs">
                 <button class="tab on" onclick="showTab('pizzas', this)" data-i18n="tab_pizza">🍕 Pizzas</button>
-                <button class="tab" onclick="showTab('pasta', this)" data-i18n="tab_pasta">🍝 Pasta</button>
-                <button class="tab" onclick="showTab('entrantes', this)" data-i18n="tab_ent">🫒 Entrantes</button>
-                <button class="tab" onclick="showTab('postres', this)" data-i18n="tab_post">🍮 Postres</button>
             </div>
             <div id="t-pizzas" class="menu-grid">
                 <div class="mcard">
@@ -974,7 +971,7 @@
                 </div>
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Marinera</span>
+                        <span class="mcard-name">Marinara</span>
                         <span class="mcard-price">10.50 €</span>
                     </div>
                     <p class="mcard-desc">Tomate, anchoas, alcaparras, orégano, albahaca</p>
@@ -1079,103 +1076,63 @@
                         <span class="badge bd">frutos de cáscara</span>
                     </div>
                 </div>
-            </div>
-            <div id="t-pasta" class="menu-grid" style="display:none">
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Tagliatelle al Ragù</span>
-                        <span class="mcard-price">13 €</span>
+                        <span class="mcard-name">Amore & Sapore</span>
+                        <span class="mcard-price">17.00 €</span>
                     </div>
-                    <p class="mcard-desc" data-i18n="pa1">Pasta fresca artesanal con ragù de ternera gallega cocido 6 horas. Parmigiano rallado al momento.</p>
+                    <p class="mcard-desc">Mozzarella, mortadella, burrata, pistacho</p>
                     <div class="badges">
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">frutos de cáscara</span>
                     </div>
                 </div>
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Pappardelle de Zorza</span>
-                        <span class="mcard-price">14 €</span>
+                        <span class="mcard-name">La rustica</span>
+                        <span class="mcard-price">13.00 €</span>
                     </div>
-                    <p class="mcard-desc" data-i18n="pa2">Zorza gallega, tomate cherry, pimiento de Herbón y scamorza. Fusión que funciona de verdad.</p>
+                    <p class="mcard-desc">Tomate, mozzarella, alcachofas, beicon, cebolla</p>
                     <div class="badges">
-                        <span class="badge bs">fusión gall-ita</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">sulfitos</span>
                     </div>
                 </div>
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Gnocchi al Pesto del Mar</span>
-                        <span class="mcard-price">12 €</span>
+                        <span class="mcard-name">Jamón y queso</span>
+                        <span class="mcard-price">12.00 €</span>
                     </div>
-                    <p class="mcard-desc" data-i18n="pa3">Gnocchi de patata con pesto de algas gallegas, piñones y parmigiano. Sorprendente.</p>
+                    <p class="mcard-desc">Tomate, mozzarella, jamón cocido</p>
                     <div class="badges">
-                        <span class="badge bs">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
                     </div>
                 </div>
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Cacio e Pepe</span>
-                        <span class="mcard-price">11 €</span>
+                        <span class="mcard-name">Boletus y trufa</span>
+                        <span class="mcard-price">19.00 €</span>
                     </div>
-                    <p class="mcard-desc" data-i18n="pa4">Solo tres ingredientes: pasta, queso y pimienta. Cuando algo es así de simple, tiene que ser perfecto.</p>
+                    <p class="mcard-desc">Mozzarella, boletus, trufa</p>
                     <div class="badges">
-                        <span class="badge bs">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">sulfitos</span>
                     </div>
                 </div>
-            </div>
-            <div id="t-entrantes" class="menu-grid" style="display:none">
                 <div class="mcard">
                     <div class="mcard-top">
-                        <span class="mcard-name">Burrata con Tomate</span>
-                        <span class="mcard-price">9 €</span>
+                        <span class="mcard-name">Tonno y cipolla</span>
+                        <span class="mcard-price">16.00 €</span>
                     </div>
-                    <p class="mcard-desc" data-i18n="en1">Burrata fresca, tomate corazón de buey gallego, sal Maldon y aceite de Sicilia. Nada más, nada menos.</p>
+                    <p class="mcard-desc">Tomate, mozzarella, tonno, cipolla</p>
                     <div class="badges">
-                        <span class="badge bs">vegetariana</span>
-                    </div>
-                </div>
-                <div class="mcard">
-                    <div class="mcard-top">
-                        <span class="mcard-name">Bruschetta de la Aldea</span>
-                        <span class="mcard-price">6 €</span>
-                    </div>
-                    <p class="mcard-desc" data-i18n="en2">Pan de masa madre local, tomate rallado, ajo y rúcula. Para picar mientras esperas.</p>
-                    <div class="badges">
-                        <span class="badge bs">vegetariana</span>
-                    </div>
-                </div>
-                <div class="mcard">
-                    <div class="mcard-top">
-                        <span class="mcard-name">Antipasto Misto</span>
-                        <span class="mcard-price">11 €</span>
-                    </div>
-                    <p class="mcard-desc" data-i18n="en3">Embutidos italianos, tetilla, aceitunas, grissini y mermelada de higo. Para compartir (o no).</p>
-                </div>
-            </div>
-            <div id="t-postres" class="menu-grid" style="display:none">
-                <div class="mcard">
-                    <div class="mcard-top">
-                        <span class="mcard-name">Tiramisù de la Casa</span>
-                        <span class="mcard-price">5 €</span>
-                    </div>
-                    <p class="mcard-desc" data-i18n="po1">Receta familiar, mascarpone, café espresso y un secreto que no contamos. El favorito del local.</p>
-                    <div class="badges">
-                        <span class="badge bs">favorito</span>
-                    </div>
-                </div>
-                <div class="mcard">
-                    <div class="mcard-top">
-                        <span class="mcard-name">Tarta de Santiago con Lemon Curd</span>
-                        <span class="mcard-price">5 €</span>
-                    </div>
-                    <p class="mcard-desc" data-i18n="po2">El clásico gallego con un toque cítrico italiano. Fusión que pide repetir.</p>
-                </div>
-                <div class="mcard">
-                    <div class="mcard-top">
-                        <span class="mcard-name">Panna Cotta</span>
-                        <span class="mcard-price">5 €</span>
-                    </div>
-                    <p class="mcard-desc" data-i18n="po3">Suave y fresca, con coulis de moras y arándanos de temporada gallega.</p>
-                    <div class="badges">
-                        <span class="badge bv">vegetariana</span>
+                        <span class="badge bd">gluten</span>
+                        <span class="badge bd">lácteos</span>
+                        <span class="badge bd">pescado</span>
                     </div>
                 </div>
             </div>
